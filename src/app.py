@@ -5,6 +5,7 @@ import os
 
 from flask_jwt_extended import JWTManager
 
+
 from flask import Flask, request, jsonify, url_for, send_from_directory
 from flask_migrate import Migrate
 from flask_swagger import swagger
@@ -25,7 +26,7 @@ app.url_map.strict_slashes = False
 
 
 # Setup the Flask-JWT-Extended extension
-app.config["JWT_SECRET_KEY"] =  os.environ.get('JWT_KEY')
+app.config["JWT_SECRET_KEY"] =  os.environ.get('JWT_SECRET')
 jwt = JWTManager(app)
 
 
@@ -72,6 +73,8 @@ def serve_any_other_file(path):
         path = 'index.html'
     response = send_from_directory(static_file_dir, path)
     response.cache_control.max_age = 0 # avoid cache memory
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    response.headers.add('Access-Control-Allow-Headers', 'Content-Type')
     return response
 
 
