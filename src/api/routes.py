@@ -65,3 +65,12 @@ def make_token():
     return jsonify(access_token=access_token)
 
 
+@api.route("/hello", methods=["GET"])
+@jwt_required()
+def get_hello():
+        dictionary = {
+            "message": "PRIVATE ROUTE"
+        }
+        return jsonify(dictionary)
+
+

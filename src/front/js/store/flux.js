@@ -27,7 +27,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				if(token && token != "" && token != undefined) setStore({ token: token });
 			},
 
-			
+
 			// LOG OUT !!
 			signout: () => {
 				sessionStorage.removeItem("token");
@@ -65,15 +65,41 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			getMessage: async () => {
+				const store = getStore();
+			  
+				// Check if a token is available
+				if (!store.token) {
+				  console.log("No token found");
+				  return;
+				}
+			  
+				const opts = {
+				  headers: {
+					Authorization: `Bearer ${store.token}`
+				  }
+				};
+			  
 				try {
-					const resp = await fetch(process.env.BACKEND_URL + "/api/hello");
+				  const resp = await fetch('https://mikiemapo-sturdy-enigma-56p47gpvj79375jp-3001.preview.app.github.dev/api/hello', opts);
+				  
+				  if (resp.status === 401) {
+					console.log("Unauthorized: Token is invalid or expired");
+					return;
+				  }
+			  
+				  if (resp.ok) {
 					const data = await resp.json();
 					setStore({ message: data.message });
-					return data;
+				  } else {
+					console.log("Error loading message from backend:", resp.status);
+					
+				  }
 				} catch (error) {
-					console.log("Error loading message from backend", error);
+				  console.error("Error loading message from backend:", error);
+				  
 				}
-			},
+			  },
+			  
 
 			changeColor: (index, color) => {
 				const store = getStore();

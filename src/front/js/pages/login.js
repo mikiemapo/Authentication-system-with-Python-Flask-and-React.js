@@ -28,23 +28,25 @@ export const Login = () => {
       {store.token && store.token !== "" && store.token !== undefined ? (
         <div>
           "You are logged in" + {store.token}
-          <button onClick={handleOut}>SIGN OUT</button>
+          <button className="btn btn-primary" onClick={handleOut}>SIGN OUT</button>
         </div>
       ) : (
         <div>
-          <input
+          <input 
+		  //className="d-flex alignInput"
             type="text"
             placeholder="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
           <input
+		  //className="d-flex alignInput"
             type="password"
             placeholder="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <button onClick={handleClick}>LOGIN</button>
+          <button className="btn btn-primary" onClick={handleClick}>LOGIN</button>
         </div>
       )}
     </div>
