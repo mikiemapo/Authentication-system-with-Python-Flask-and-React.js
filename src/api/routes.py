@@ -7,6 +7,7 @@ from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token 
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
+from werkzeug.security import generate_password_hash, check_password_hash
 
 api = Blueprint('api', __name__)
 
@@ -30,7 +31,7 @@ def new_user():
     existing_user = User.query.filter(email=rb["email"]).first()
     if existing_user:
         return "Üser email address is already in use", 200
-    new_user = User(email=rb["email"], password=rb["password"], is_active=True)
+    new_user = User(email=rb["email"], password= generate_password_hash(rb["password"]), is_active=True)
     db.session.add(new_user)
     db.session.commit()
       # create a new token with the user id inside
@@ -41,9 +42,9 @@ def new_user():
 @api.route("/login", methods=["POST"])
 def user_login():
     rb = request.get_json()
-    existing_user = User.query.filter(email=rb["email"]).first()
+    existing_user = User.query.filter_by(email=rb["email"]).first()
     if existing_user:
-       if existing_user.password == rb['password'] :
+       if check_password_hash(existing_user.password, rb['password']) :
            # create a new token with the user id inside
             access_token = create_access_token(identity=existing_user.email)
             return jsonify({ "token": access_token}), 200
