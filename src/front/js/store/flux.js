@@ -31,7 +31,10 @@ const getState = ({ getStore, getActions, setStore }) => {
             }),
           };
 
-          const resp = await fetch(process.env.BACKEND_URL + "api/token", opts);
+          const resp = await fetch(
+            `${process.env.BACKEND_URL}/api/login`,
+            opts
+          );
           if (resp.status !== 200) {
             alert("THERE WAS AN ERROR!!!!!!!!");
             return false;
@@ -63,7 +66,10 @@ const getState = ({ getStore, getActions, setStore }) => {
         };
 
         try {
-          const resp = await fetch(process.env.BACKEND_URL + "api/hello", opts);
+          const resp = await fetch(
+            `${process.env.BACKEND_URL}/api/hello`,
+            opts
+          );
 
           if (resp.status === 401) {
             console.log("Unauthorized: Token is invalid or expired");
