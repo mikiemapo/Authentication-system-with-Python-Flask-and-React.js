@@ -54,12 +54,11 @@ def user_login():
       
 
 
-@api.route("/token", methods=["POST"])
+@api.route("/token", methods=["POST", "GET"])
 def make_token():
     email = request.json.get("email", None)
     password = request.json.get("password", None)
-    if email != "test" or password != "test":
-        return jsonify({"msg": "Bad email or password"}), 401
+   
 
     access_token = create_access_token(identity=email)
     return jsonify(access_token=access_token)

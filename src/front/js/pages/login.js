@@ -16,6 +16,7 @@ export const Login = () => {
   const handleOut = () => {
     actions.signout();
   };
+
   // LOG IN !!
   console.log("this is your token", store.token);
   const handleClick = () => {
@@ -28,25 +29,29 @@ export const Login = () => {
       {store.token && store.token !== "" && store.token !== undefined ? (
         <div>
           "You are logged in" + {store.token}
-          <button className="btn btn-primary" onClick={handleOut}>SIGN OUT</button>
+          <button className="btn btn-primary" onClick={handleOut}>
+            SIGN OUT
+          </button>
         </div>
       ) : (
         <div>
-          <input 
-		  //className="d-flex alignInput"
+          <input
+            //className="d-flex alignInput"
             type="text"
             placeholder="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
           <input
-		  //className="d-flex alignInput"
+            //className="d-flex alignInput"
             type="password"
             placeholder="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <button className="btn btn-primary" onClick={handleClick}>LOGIN</button>
+          <button className="btn btn-primary" onClick={handleClick}>
+            LOGIN
+          </button>
         </div>
       )}
     </div>

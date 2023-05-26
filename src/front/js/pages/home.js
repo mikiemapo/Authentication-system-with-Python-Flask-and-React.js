@@ -10,7 +10,6 @@ export const Home = () => {
     if (store.token && store.token !== "" && store.token !== undefined)
       actions.getMessage();
   }, [store.token]);
-  
 
   return (
     <div className="text-center mt-5">
@@ -18,7 +17,11 @@ export const Home = () => {
       <p>
         <img src={rigoImageUrl} />
       </p>
-      <div className="alert alert-info">{store.message}</div>
+      {store.token ? (
+        <div className="alert alert-info">{store.message}</div>
+      ) : (
+        <div></div>
+      )}
     </div>
   );
 };
